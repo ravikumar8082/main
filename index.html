@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Contact Form</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        emailjs.init("oo0jFrVnXXXmhcVVx");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Form</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your Public Key
+        (function () {
+            emailjs.init("oo0jFrVnXXXmhcVVx"); // Replace YOUR_PUBLIC_KEY with your actual Public Key
+        })();
+
+        function sendEmail() {
+            // Replace with your Service ID and Template ID
+            const serviceID = "service_iioq66r";
+            const templateID = "template_ljeu13d";
+
+            // Collect form data
+            const templateParams = {
+                fullName: document.getElementById('fullName').value,
+                cnic: document.getElementById('cnic').value,
+                lastDegree: document.getElementById('lastDegree').value,
+                email: document.getElementById('email').value,
+                contact: document.getElementById('contact').value,
+            };
+
+            // Send email via EmailJS
+            emailjs.send(serviceID, templateID, templateParams)
+                .then(response => {
+                    alert("Email sent successfully!");
+                })
+                .catch(error => {
+                    console.error("Error sending email:", error);
+                    alert("Failed to send email.");
+                });
+        }
     </script>
-    <script src="script.js"></script>
 </head>
 <body>
-    <form id="contactForm">
-        <label for="fullName">Full Name:</label>
+    <h1>Data Collection Form</h1>
+    <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
+        <label for="fullName">Full Name:</label><br>
         <input type="text" id="fullName" name="fullName" required><br><br>
 
-        <label for="cnic">CNIC:</label>
+        <label for="cnic">CNIC:</label><br>
         <input type="text" id="cnic" name="cnic" required><br><br>
 
-        <label for="lastDegree">Last Degree:</label>
+        <label for="lastDegree">Last Degree:</label><br>
         <input type="text" id="lastDegree" name="lastDegree" required><br><br>
 
-        <label for="email">Email:</label>
+        <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" required><br><br>
 
-        <label for="contact">Contact:</label>
+        <label for="contact">Contact:</label><br>
         <input type="tel" id="contact" name="contact" required><br><br>
 
-        <button type="button" onclick="sendMail()">Submit</button>
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send data to the server
-      const response = await fetch('https://ffaa-144-24-111-34.ngrok-free.app/submit', {
+      const response = await fetch('https://c3b2-144-24-111-34.ngrok-free.app/submit', {
         method: 'POST',
         headers: {
           'ngrok-skip-browser-warning': 'true', // Bypass ngrok browser warning

